@@ -6,10 +6,9 @@ const redis = redisClient(6379, 'localhost')
 
 router.route('/')
 router.post('/', (req, res) => {
-  console.log('hehe')
   const data = req.body
   find(data, Books).then(result => {
-    redis.set(data.toString(), result.toString(), function () {
+    redis.set(JSON.stringify(data), result, function () {
       res.json(result)
     })
   }).catch(err => {
